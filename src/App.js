@@ -3,25 +3,24 @@ import logo from './image/airflow.svg';
 import Button from './components/Button';
 import Screen from './components/Screen';
 import ButtonClear from './components/ButtonClear';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { evaluate } from 'mathjs';
 
 function App() {
 
   const [input, setInput] = useState('');
 
-  const addInput = val => {
-    setInput(input + val);
-  };
+  const addInput = useCallback((val) => {
+    setInput((currentInput) => currentInput + val);
+  }, []);
 
-  const calculateResult = () => {
+  const calculateResult = useCallback(() => {
     if (input) {
-      setInput(evaluate(input));
+      setInput((currentInput) => evaluate(currentInput));
     } else {
-      alert('Por favor ingrese valores para realizar los cálculos.');
+      alert('Please enter values to perform the calculations.');
     }
-    
-  };
+  }, [input]);
 
 
   return (
