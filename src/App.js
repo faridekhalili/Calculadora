@@ -15,13 +15,19 @@ function App() {
   }, []);
 
   const calculateResult = useCallback(() => {
-    if (input) {
-      setInput((currentInput) => evaluate(currentInput));
-    } else {
-      alert('Please enter values to perform the calculations.');
-    }
-  }, [input]);
+    setInput(currentInput => {
+      if (currentInput) {
+        return evaluate(currentInput);
+      } else {
+        alert('Please enter values to perform the calculations.');
+        return currentInput;
+      }
+    });
+  }, []);
 
+  const handleClear = useCallback(() => {
+    setInput('');
+  }, []);
 
   return (
     <div className="App">
@@ -60,7 +66,7 @@ function App() {
           <Button handleClick={addInput}>/</Button>
         </div>
         <div className='row'>
-          <ButtonClear handleClear={() => setInput('')}>
+          <ButtonClear handleClear={handleClear}>
             Clear
           </ButtonClear>
         </div>
