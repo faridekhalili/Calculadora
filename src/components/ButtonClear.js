@@ -7,4 +7,4 @@ const ButtonClear = (props) => (
     </div>
 );
 
-export default React.memo(ButtonClear);
+export default ButtonClear;
