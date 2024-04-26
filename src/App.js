@@ -3,31 +3,26 @@ import logo from './image/airflow.svg';
 import Button from './components/Button';
 import Screen from './components/Screen';
 import ButtonClear from './components/ButtonClear';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { evaluate } from 'mathjs';
 
 function App() {
 
   const [input, setInput] = useState('');
 
-  const addInput = useCallback((val) => {
-    setInput((currentInput) => currentInput + val);
-  }, []);
+  const addInput = val => {
+    setInput(input + val);
+  };
 
-  const calculateResult = useCallback(() => {
-    setInput(currentInput => {
-      if (currentInput) {
-        return evaluate(currentInput);
-      } else {
-        alert('Please enter values to perform the calculations.');
-        return currentInput;
-      }
-    });
-  }, []);
+  const calculateResult = () => {
+    if (input) {
+      setInput(evaluate(input));
+    } else {
+      alert('Por favor ingrese valores para realizar los cálculos.');
+    }
+    
+  };
 
-  const handleClear = useCallback(() => {
-    setInput('');
-  }, []);
 
   return (
     <div className="App">
@@ -66,7 +61,7 @@ function App() {
           <Button handleClick={addInput}>/</Button>
         </div>
         <div className='row'>
-          <ButtonClear handleClear={handleClear}>
+          <ButtonClear handleClear={() => setInput('')}>
             Clear
           </ButtonClear>
         </div>
