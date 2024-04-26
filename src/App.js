@@ -3,16 +3,16 @@ import logo from './image/airflow.svg';
 import Button from './components/Button';
 import Screen from './components/Screen';
 import ButtonClear from './components/ButtonClear';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { evaluate } from 'mathjs';
 
 function App() {
 
   const [input, setInput] = useState('');
 
-  const addInput = val => {
-    setInput(input + val);
-  };
+  const addInput = useCallback((val) => {
+    setInput((currentInput) => currentInput + val);
+  }, []);
 
   const calculateResult = () => {
     if (input) {
@@ -23,6 +23,9 @@ function App() {
     
   };
 
+  const handleClear = useCallback(() => {
+    setInput('');
+  }, []);
 
   return (
     <div className="App">
@@ -61,7 +64,7 @@ function App() {
           <Button handleClick={addInput}>/</Button>
         </div>
         <div className='row'>
-          <ButtonClear handleClear={() => setInput('')}>
+          <ButtonClear handleClear={handleClear}>
             Clear
           </ButtonClear>
         </div>
